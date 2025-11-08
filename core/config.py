@@ -12,6 +12,12 @@ class Settings(BaseSettings):
 
     CHAT_ID: int  # The target chat id
 
+    DB_HOST: str  # PostgreSQL host
+    DB_PORT: int  # PostgreSQL port
+    DB_NAME: str  # Database name
+    DB_USER: str  # Database user
+    DB_PASS: str  # Database password
+
     @property
     def DB_URL(self) -> str:
         return (

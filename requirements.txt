@@ -1,1 +1,3 @@
+asyncpg
 pydantic_settings
+sqlalchemy
