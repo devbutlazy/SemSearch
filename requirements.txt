@@ -1,3 +1,4 @@
 asyncpg
+pgvector 
 pydantic_settings
 sqlalchemy

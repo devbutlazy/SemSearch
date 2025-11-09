@@ -2,11 +2,12 @@ from datetime import datetime
 
 from sqlalchemy import BigInteger, DateTime, String, Integer
 from sqlalchemy.orm import Mapped, mapped_column
+from pgvector.sqlalchemy import Vector
 
 from core.database.models.base import Base
 
-class UserORM(Base):
-    __tablename__ = "users"
+class MessageORM(Base):
+    __tablename__ = "messages"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
 
@@ -17,6 +18,8 @@ class UserORM(Base):
     channel_from: Mapped[str] = mapped_column(String, nullable=False)
     from_user_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
 
+    embedding: Mapped[list[float]] = mapped_column(Vector(1024), nullable=True)
+
     # TODO: add media support in *** format
 
-    repr_cols_num: int = 6
+    repr_cols_num: int = 7
