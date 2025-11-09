@@ -1,0 +1,7 @@
+FROM pgvector/pgvector:pg18
+
+COPY pgvector-entrypoint.sh /usr/local/bin/pgvector-entrypoint.sh
+RUN chmod +x /usr/local/bin/pgvector-entrypoint.sh
+
+ENTRYPOINT ["pgvector-entrypoint.sh"]
+CMD ["postgres"]
