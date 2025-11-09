@@ -12,24 +12,24 @@ class Settings(BaseSettings):
 
     CHAT_ID: int  # The target chat id
 
-    DB_HOST: str  # PostgreSQL host
-    DB_PORT: int  # PostgreSQL port
-    DB_NAME: str  # Database name
-    DB_USER: str  # Database user
-    DB_PASS: str  # Database password
+    POSTGRES_HOST: str  # PostgreSQL host
+    POSTGRES_PORT: int  # PostgreSQL port
+    POSTGRES_DB: str  # Database name
+    POSTGRES_USER: str  # Database user
+    POSTGRES_PASSWORD: str  # Database password
 
     @property
     def DB_URL(self) -> str:
         return (
-            f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASS}"
-            f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+            f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
+            f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
         )
 
     @property
     def SYNC_DB_URL(self) -> str:
         return (
-            f"postgresql+psycopg2://{self.DB_USER}:{self.DB_PASS}"
-            f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+            f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
+            f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
         )
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
