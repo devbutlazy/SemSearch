@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 engine = create_async_engine(
     settings.DB_URL,
 )
- 
+
 
 async def init_db() -> None:
     """

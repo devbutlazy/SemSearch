@@ -7,6 +7,7 @@ from core.database import engine
 from core.database.models.message import MessageORM
 from core.database.repositories.base import BaseRepository
 
+
 class MessageRepository(BaseRepository):
     def __init__(self) -> None:
         self.session: async_sessionmaker
@@ -14,8 +15,8 @@ class MessageRepository(BaseRepository):
     async def __aenter__(self: Self) -> Self:
         self.session: async_sessionmaker = async_sessionmaker(engine)
         return self
-    
-    async def __aexit__(self, exc_type, exc_value, exc_tb) -> None: # noqa
+
+    async def __aexit__(self, exc_type, exc_value, exc_tb) -> None:  # noqa
         return await self.session().close()
 
     async def add_message(self, message: MessageORM) -> Optional[MessageORM]:
