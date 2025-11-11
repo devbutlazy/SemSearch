@@ -6,16 +6,17 @@ from pgvector.sqlalchemy import Vector
 
 from core.database.models.base import Base
 
+
 class MessageORM(Base):
     __tablename__ = "messages"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-
-    message_id: Mapped[int] = mapped_column(BigInteger, nullable=False, unique=True)
+    message_id: Mapped[int] = mapped_column(BigInteger, nullable=False, primary_key=True)
     message_text: Mapped[str] = mapped_column(String, nullable=True)
-    message_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    message_date: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
 
-    channel_from: Mapped[str] = mapped_column(String, nullable=False)
+    from_chat_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
     from_user_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
 
     embedding: Mapped[list[float]] = mapped_column(Vector(1024), nullable=True)

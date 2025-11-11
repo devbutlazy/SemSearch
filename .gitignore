@@ -82,3 +82,6 @@ pytestdebug.log
 
 # Extras
 *.session
+pgvector-entrypoint.sh
+docker-compose.yaml
+Dockerfile.pgvector
