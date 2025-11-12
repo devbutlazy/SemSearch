@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 async def main() -> None:
     logger.info("Initializing the parser process...")
-    
+
     await init_db()
     await MessageParser().sync_messages()
 

@@ -1,6 +1,14 @@
+# Database
 asyncpg
-FlagEmbedding
-pgvector 
-pydantic_settings
 sqlalchemy
+pgvector
+
+# Embeddings
+git+https://github.com/devbutlazy/FlagEmbedding.git#egg=FlagEmbedding
+
+# Data / Utilities
+numpy
+pydantic_settings
+
+# Telegram client
 telethon

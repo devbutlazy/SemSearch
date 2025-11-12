@@ -14,7 +14,9 @@ class MessageParser:
         )
 
     async def _store_message(self, message: Message) -> None:
-        if getattr(message, "from_id", None) is None or not hasattr(message.from_id, "user_id"):
+        if getattr(message, "from_id", None) is None or not hasattr(
+            message.from_id, "user_id"
+        ):
             return None
 
         logger.info(f"Fetched: {message.text} | {message.id}")
@@ -51,9 +53,7 @@ class MessageParser:
             last_message_id = await repository.get_last_message_id()
 
         async for message in self.client.iter_messages(
-            entity=settings.CHAT_ID,
-            reverse=reverse,
-            min_id=last_message_id or 0
+            entity=settings.CHAT_ID, reverse=reverse, min_id=last_message_id or 0
         ):
             await self._store_message(message)
 

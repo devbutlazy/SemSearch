@@ -19,7 +19,7 @@ class MessageRepository(BaseRepository):
 
     async def __aexit__(self, exc_type, exc_value, exc_tb) -> None:  # noqa
         return await self.session().close()
-    
+
     async def get_last_message_id(self) -> Optional[int]:
         """
         Get the latest (largest) message_id from the database.
@@ -28,11 +28,9 @@ class MessageRepository(BaseRepository):
         """
 
         async with self.session() as session:
-            result = await session.execute(
-                select(func.max(MessageORM.message_id))
-            )
+            result = await session.execute(select(func.max(MessageORM.message_id)))
             return result.scalar_one_or_none()
-        
+
     async def get_unembedded_messages(self) -> Optional[list[MessageORM]]:
         """
         Fetch all messages from the database where embedding is None.
@@ -42,7 +40,7 @@ class MessageRepository(BaseRepository):
 
         async with self.session() as session:
             result = await session.execute(
-                select(MessageORM).where(MessageORM.embedding == None) # noqa: E711
+                select(MessageORM).where(MessageORM.embedding == None)  # noqa: E711
             )
             return result.scalars().all() or None
 
@@ -82,4 +80,3 @@ class MessageRepository(BaseRepository):
                 return None
 
             return messages
-
