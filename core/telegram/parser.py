@@ -47,9 +47,13 @@ class MessageParser:
         except ValueError:
             await self.client.get_dialogs()
 
+        async with MessageRepository() as repository:
+            last_message_id = await repository.get_last_message_id()
+
         async for message in self.client.iter_messages(
             entity=settings.CHAT_ID,
             reverse=reverse,
+            min_id=last_message_id or 0
         ):
             await self._store_message(message)
 

@@ -1,5 +1,6 @@
 from typing import Self, Optional
 
+from sqlalchemy import select, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
@@ -18,6 +19,19 @@ class MessageRepository(BaseRepository):
 
     async def __aexit__(self, exc_type, exc_value, exc_tb) -> None:  # noqa
         return await self.session().close()
+    
+    async def get_last_message_id(self) -> Optional[int]:
+        """
+        Get the latest (largest) message_id from the database.
+
+        :return: int | None
+        """
+
+        async with self.session() as session:
+            result = await session.execute(
+                select(func.max(MessageORM.message_id))
+            )
+            return result.scalar_one_or_none()
 
     async def add_message(self, message: MessageORM) -> Optional[MessageORM]:
         """
@@ -26,6 +40,7 @@ class MessageRepository(BaseRepository):
         :param message: MessageORM
         :return: MessageORM if success, else None
         """
+
         async with self.session() as session:
             session.add(message)
             try:
@@ -44,6 +59,7 @@ class MessageRepository(BaseRepository):
         :param message: MessageORM
         :return: MessageORM if success, else None
         """
+
         async with self.session() as session:
             session.add_all(messages)
             try:
@@ -53,3 +69,4 @@ class MessageRepository(BaseRepository):
                 return None
 
             return messages
+
