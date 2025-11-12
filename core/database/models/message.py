@@ -10,7 +10,9 @@ from core.database.models.base import Base
 class MessageORM(Base):
     __tablename__ = "messages"
 
-    message_id: Mapped[int] = mapped_column(BigInteger, nullable=False, primary_key=True)
+    message_id: Mapped[int] = mapped_column(
+        BigInteger, nullable=False, primary_key=True
+    )
     message_text: Mapped[str] = mapped_column(String, nullable=True)
     message_date: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False
