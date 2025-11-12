@@ -32,6 +32,19 @@ class MessageRepository(BaseRepository):
                 select(func.max(MessageORM.message_id))
             )
             return result.scalar_one_or_none()
+        
+    async def get_unembedded_messages(self) -> Optional[list[MessageORM]]:
+        """
+        Fetch all messages from the database where embedding is None.
+
+        :return: a list of MessageORM, or None if no such messages exist.
+        """
+
+        async with self.session() as session:
+            result = await session.execute(
+                select(MessageORM).where(MessageORM.embedding == None) # noqa: E711
+            )
+            return result.scalars().all() or None
 
     async def add_message(self, message: MessageORM) -> Optional[MessageORM]:
         """

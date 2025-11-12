@@ -1,4 +1,5 @@
 asyncpg
+FlagEmbedding
 pgvector 
 pydantic_settings
 sqlalchemy
