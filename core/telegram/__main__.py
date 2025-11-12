@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from core.database import init_db
-from core.telegram.parser import MessageParser
+from core.telegram.services.parser import MessageParser
 
 logging.basicConfig(
     level=logging.INFO,
@@ -12,8 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 async def main() -> None:
-    logger.info("Initializing the parser process...")
-
+    logger.info("Initializing Telegram parser...")
     await init_db()
     await MessageParser().sync_messages()
 
