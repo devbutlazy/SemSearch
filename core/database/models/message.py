@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from sqlalchemy import BigInteger, DateTime, String, Integer
-from sqlalchemy.orm import Mapped, mapped_column
 from pgvector.sqlalchemy import Vector
+from sqlalchemy import BigInteger, DateTime, String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from core.database.models.base import Base
 

@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     API_HASH: str  # Telegram API HASH from core.telegram.org
 
     CHAT_ID: int  # The target chat id
+    STRICTNESS_THRESHOLD: float  # Search strictness threshold
 
     POSTGRES_HOST: str  # PostgreSQL host
     POSTGRES_PORT: int  # PostgreSQL port

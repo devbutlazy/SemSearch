@@ -1,9 +1,10 @@
-from typing import Self, Optional
+from typing import Optional, Self
 
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
+from core.config import settings
 from core.database import engine
 from core.database.models.message import MessageORM
 from core.database.repositories.base import BaseRepository
@@ -80,3 +81,30 @@ class MessageRepository(BaseRepository):
                 return None
 
             return messages
+
+    async def search_by_embedding(
+        self, query_vec: list[float], limit: int = 50
+    ) -> list[MessageORM]:
+        """
+        Perform a cosine distance search using pgvector.
+        PGVector syntax:
+            embedding <=> '[...]'
+
+        :param query_vec: Vector representation of the query text.
+        :param limit: Maximum number of results.
+        :return: List of MessageORM instances sorted by similarity.
+        """
+        dist_threshold = 1 - settings.STRICTNESS_THRESHOLD
+
+        async with self.session() as session:
+            result = await session.execute(
+                select(MessageORM)
+                .where(MessageORM.embedding.isnot(None))
+                .where(
+                    MessageORM.embedding.cosine_distance(query_vec) <= dist_threshold
+                )
+                .order_by(MessageORM.embedding.cosine_distance(query_vec))
+                .limit(limit)
+            )
+
+            return result.scalars().all()

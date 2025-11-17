@@ -25,7 +25,7 @@ class MessageService:
                     message_id=message.id,
                     message_text=message.message,
                     message_date=message.date,
-                    from_chat_id=message.chat_id,
+                    from_chat_id=message.peer_id.channel_id,
                     from_user_id=message.from_id.user_id,
                     embedding=None,
                 )
